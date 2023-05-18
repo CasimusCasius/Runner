@@ -6,6 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+
+	/// <summary>
+	/// Pole na iloœæ coinsów
+	/// </summary>
+	[SerializeField]private int coins;
+	
 	//Tworzymy statyczn¹ zmienn¹ przechowuj¹c¹ jedyny obiekt klasy GameManager (wg. wzorca Singletonu)
 	//Pozwoli to na odwo³¹nie siê do GameManagera w dowolnym miejscu projektu poprzez GameManager.instance
 	public static GameManager instance;
@@ -42,6 +48,17 @@ public class GameManager : MonoBehaviour
 	{
 		//Ustawiamy pole mówi¹ce, ¿e jesteœmy  w trakcie gry
 		inGame = true;
+
+		if(PlayerPrefs.HasKey("Coins"))
+		{
+			coins = PlayerPrefs.GetInt("Coins");
+		}
+		else
+		{
+			coins=0;
+			PlayerPrefs.SetInt("Coins", 0);
+		}
+
 	}
 
 	void FixedUpdate()
@@ -66,6 +83,8 @@ public class GameManager : MonoBehaviour
 		inGame = false;
 		//Wyœwietlamy przycisk Restart
 		resetButton.SetActive(true);
+
+		
 	}
 
 	public void RestartGame()
@@ -74,4 +93,12 @@ public class GameManager : MonoBehaviour
 		//Spowoduje to reset gry
 		SceneManager.LoadScene(0);
 	}
+
+	public void CollectCoint(int value = 1)
+	{
+		coins += value;
+		PlayerPrefs.SetInt("Coins", coins);
+	}
+
+
 }

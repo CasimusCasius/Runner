@@ -86,6 +86,15 @@ public class PlayerController : MonoBehaviour
 			//Wywo³ujemy metodê odpowiedzialn¹ za œmieræ gracza
 			PlayerDeath();
 		}
+		else if (other.CompareTag("Coin"))
+		{
+			GameManager.instance.CollectCoint();
+			Destroy(other.gameObject);
+
+		}
+
+
+
 	}
 
 	void PlayerDeath()
